@@ -20,7 +20,10 @@ Route::middleware('auth')->group(function () {
 Route::prefix('prototype')->group(function () {
     Route::get("/login", function () {
         return Inertia::render("Prototype/Login");
-    });
+    })->name("prototype.login");
+    Route::get("/register", function () {
+        return Inertia::render("Prototype/Register");
+    })->name("prototype.register");
 });
 
 require __DIR__.'/auth.php';
