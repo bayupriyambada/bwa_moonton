@@ -1,5 +1,5 @@
 import propTypes from "prop-types";
-
+import { Link } from "@inertiajs/react";
 FeaturedMovie.propTypes = {
     name: propTypes.string.isRequired,
     slug: propTypes.string.isRequired,
@@ -31,7 +31,7 @@ export default function FeaturedMovie({
             </div>
             <div
                 className="absolute bottom-0 h-[100px] left-0 right-0 bg-gradient-to-t from-black rounded-bl-[28px]
-                                rounded-br-[28px] flex justify-between items-center px-7 h-[130px]"
+                                rounded-br-[28px] flex justify-between items-center px-7"
             >
                 <div>
                     <div className="font-medium text-[22px] text-white">
@@ -45,7 +45,10 @@ export default function FeaturedMovie({
                     <img src="/assets/icons/ic_play.svg" width="50" alt="" />
                 </div>
             </div>
-            <a href={slug} className="inset-0 absolute z-50"></a>
+            <Link
+                href={route("user.dashboard.movies.show", slug)}
+                className="inset-0 absolute z-50"
+            ></Link>
         </div>
     );
 }

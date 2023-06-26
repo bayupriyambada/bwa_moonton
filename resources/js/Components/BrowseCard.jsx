@@ -33,7 +33,10 @@ export default function BrowseCard({ thumbnail, name, category, slug }) {
                     alt=""
                 />
             </div>
-            <a href={slug} className="inset-0 absolute z-50"></a>
+            <a
+                href={route("user.dashboard.movies.show", slug)}
+                className="inset-0 absolute z-50"
+            ></a>
         </div>
     );
 }
