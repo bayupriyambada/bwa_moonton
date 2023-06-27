@@ -2,7 +2,14 @@ import {useEffect, useRef } from 'react';
 import propTypes from "prop-types";
 
 Input.propTypes = {
-    type: propTypes.oneOf(["text", "number", "password", "email", "file"]),
+    type: propTypes.oneOf([
+        "text",
+        "number",
+        "password",
+        "email",
+        "file",
+        "url",
+    ]),
     name: propTypes.string,
     value: propTypes.oneOfType([propTypes.string, propTypes.number]),
     defaulValue: propTypes.oneOfType([propTypes.string, propTypes.number]),
