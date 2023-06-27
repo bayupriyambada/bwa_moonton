@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Database\Seeders\MoviesSeeder;
 use Database\Seeders\RoleTableSeeder;
 use Database\Seeders\SubscriptionPlanSeeder;
 
@@ -25,7 +24,6 @@ class DatabaseSeeder extends Seeder
             RoleTableSeeder::class,
             UserTableSeeder::class,
             SubscriptionPlanSeeder::class,
-            MoviesSeeder::class,
         ]);
     }
 }

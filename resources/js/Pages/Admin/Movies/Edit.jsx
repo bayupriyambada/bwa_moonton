@@ -1,18 +1,13 @@
 import Authenticated from "@/Layouts/Authenticated/Auth";
-import { Head, Link, useForm } from "@inertiajs/react";
+import { Head, router, useForm } from "@inertiajs/react";
 import ValidationErrors from "@/Components/ValidationErrors";
 import InputLabel from "@/Components/Label";
 import Input from "@/Components/Input";
 import Checkbox from "@/Components/Checkbox";
 import Button from "@/Components/Button";
-export default function Create({ auth }) {
-    const { setData, post, processing, errors } = useForm({
-        name: "",
-        category: "",
-        video_url: "",
-        thumbnail: "",
-        rating: "",
-        is_featured: false,
+export default function Edit({ auth, movies }) {
+    const { data, setData, post, processing, errors } = useForm({
+        ...movies,
     });
 
     const onHandleChange = (e) => {
@@ -25,14 +20,21 @@ export default function Create({ auth }) {
     const submit = (e) => {
         e.preventDefault();
 
-        post(route("admin.dashboard.movies.store"));
+        if (data.thumbnail === movies.thumbnail) {
+            delete data.thumbnail;
+        }
+
+        router.post(route("admin.dashboard.movies.update", movies.id), {
+            _method: "put",
+            ...data,
+        });
     };
     return (
         <Authenticated auth={auth}>
             <Head>
-                <title>Insert Movies</title>
+                <title>{movies.name}</title>
             </Head>
-            <h1 className="text-xl">Insert a new movies</h1>
+            <h1 className="text-xl">Update Movie: {movies.name}</h1>
             <hr className="mb-4" />
             <ValidationErrors errors={errors} />
             <form onSubmit={submit}>
@@ -44,6 +46,7 @@ export default function Create({ auth }) {
                 <Input
                     type="text"
                     name="name"
+                    defaulValue={movies.name}
                     handleChange={onHandleChange}
                     required
                     variant="primary-outline"
@@ -58,6 +61,7 @@ export default function Create({ auth }) {
                 <Input
                     type="text"
                     name="category"
+                    defaulValue={movies.category}
                     handleChange={onHandleChange}
                     required
                     variant="primary-outline"
@@ -72,6 +76,7 @@ export default function Create({ auth }) {
                 <Input
                     type="url"
                     name="video_url"
+                    defaulValue={movies.video_url}
                     handleChange={onHandleChange}
                     required
                     variant="primary-outline"
@@ -83,11 +88,15 @@ export default function Create({ auth }) {
                     value="Thumbnail Movies"
                     className="mt-4"
                 />
+                <img
+                    src={`/storage/${movies.thumbnail}`}
+                    alt={movies.name}
+                    className="w-40"
+                />
                 <Input
                     type="file"
                     name="thumbnail"
                     handleChange={onHandleChange}
-                    required
                     variant="primary-outline"
                     placeholder="Thumbnail Movies"
                     isError={errors.thumbnail}
@@ -100,6 +109,7 @@ export default function Create({ auth }) {
                 <Input
                     type="number"
                     name="rating"
+                    defaulValue={movies.rating}
                     handleChange={onHandleChange}
                     required
                     variant="primary-outline"
@@ -117,6 +127,7 @@ export default function Create({ auth }) {
                         handleChange={(e) =>
                             setData("is_featured", e.target.checked)
                         }
+                        checked={movies.is_featured}
                     />
                 </div>
                 <Button type="submit" className="mt-4" proccessing={processing}>
