@@ -23,6 +23,7 @@ Route::middleware(['auth', 'role:user'])->prefix('dashboard')->name('user.dashbo
 });
 
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.dashboard.')->group(function () {
+    Route::put("movies/{movies}/restore", [AdminMoviesController::class, 'restore'])->name("movies.restore");
     Route::resource('movies', AdminMoviesController::class);
 });
 

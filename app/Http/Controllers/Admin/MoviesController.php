@@ -17,7 +17,7 @@ class MoviesController extends Controller
      */
     public function index()
     {
-        $movies = Movies::get();
+        $movies = Movies::withTrashed()->orderBy("deleted_at")->get();
         return inertia("Admin/Movies/Index", [
             'movies' => $movies
         ]);
@@ -47,17 +47,6 @@ class MoviesController extends Controller
         ]);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
 
@@ -98,8 +87,22 @@ class MoviesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        $movie = Movies::find($id);
+        $movie->delete();
+        return redirect(route('admin.dashboard.movies.index'))->with([
+            'message' => "Movie delete successfully",
+            'type' => 'success'
+        ]);
+    }
+
+    public function restore($movies)
+    {
+        Movies::withTrashed()->find($movies)->restore();
+        return redirect(route('admin.dashboard.movies.index'))->with([
+            'message' => "Movie restored successfully",
+            'type' => 'success'
+        ]);
     }
 }

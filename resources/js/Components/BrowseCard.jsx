@@ -10,7 +10,7 @@ export default function BrowseCard({ thumbnail, name, category, slug }) {
     return (
         <div className="relative group overflow-hidden mr-[30px]">
             <img
-                src={thumbnail}
+                src={`/storage/${thumbnail}`}
                 className="object-cover rounded-[30px] h-[340px] w-[250px]"
                 alt={name}
             />
